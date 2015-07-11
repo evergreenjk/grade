@@ -4,8 +4,8 @@
  */
 function ers_bulk_upload_menu() {
 	$items = array();
-	$items['admin/config/system/bulkimport'] = array(
-			'title' => 'Import Students, Subjects and Marks',
+	$items['admin/import-data'] = array(
+			'title' => 'Import Data',
 			'description' => 'Bulk Import Student, Subject and Student Marks',
 			'page callback' => 'drupal_get_form',
 			'page arguments' => array('_ers_bulk_upload_callback'),
@@ -186,7 +186,7 @@ function _ers_bulk_upload_marks($file) {
 							$subject_nid = $res_subject['entity_id'];
 						}
 						if ($subject_nid > 0 && $student_nid > 0) {
-							$sql_branch = "SELECT field_branch_tid	 FROM field_data_field_branch WHERE entity_id = '" . $student_nid . "'";
+							$sql_branch = "SELECT field_branch_tid	 FROM field_data_field_branch WHERE entity_id = '" . $subject_nid . "'";
 							$res_branch = db_query($sql_branch)->fetchAssoc();
 							$mark_node = new stdClass();
 							$mark_node->type = 'mark';
