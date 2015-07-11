@@ -80,7 +80,7 @@ function _ers_bulk_upload_student($file) {
 							$sql_first_child_tid = "SELECT taxonomy_term_data.tid FROM taxonomy_term_data JOIN taxonomy_term_hierarchy ON taxonomy_term_hierarchy.tid = taxonomy_term_data.tid WHERE taxonomy_term_data.name = '" . $data[5] . "' AND taxonomy_term_hierarchy.parent = '" . $res_parnet_tid['tid'] . "'";
 							$res_first_child_tid = db_query($sql_first_child_tid)->fetchAssoc();
 							if ($res_first_child_tid['tid']) {
-								$sql_second_child_tid = "SELECT taxonomy_term_data.tid FROM taxonomy_term_data JOIN taxonomy_term_hierarchy ON taxonomy_term_hierarchy.tid = taxonomy_term_data.tid WHERE taxonomy_term_data.name = '0" . intval($data[6]) . "' AND taxonomy_term_hierarchy.parent = '" . $res_first_child_tid['tid'] . "'";
+								$sql_second_child_tid = "SELECT taxonomy_term_data.tid FROM taxonomy_term_data JOIN taxonomy_term_hierarchy ON taxonomy_term_hierarchy.tid = taxonomy_term_data.tid WHERE taxonomy_term_data.name = '" . intval($data[6]) . "' AND taxonomy_term_hierarchy.parent = '" . $res_first_child_tid['tid'] . "'";
 								$res_second_child_tid = db_query($sql_second_child_tid)->fetchAssoc();
 								if (!empty($res_second_child_tid['tid'])) {
 									$node->field_branch['und'][0]['tid'] = $res_second_child_tid['tid'];
@@ -118,13 +118,13 @@ function _ers_bulk_upload_subject($file) {
 						$node->title = $data[0] . '-' . $data[1];
 						$node->field_subject_code['und'][0]['value'] = $data[0];
 						$node->field_subject_name['und'][0]['value'] = $data[1];
-						$sql_parent_tid = "SELECT tid FROM taxonomy_term_data WHERE name = '" . $data[2] . "'";
+						$sql_parent_tid = "SELECT tid FROM taxonomy_term_data WHERE name = '" . trim($data[2]) . "'";
 						$res_parnet_tid = db_query($sql_parent_tid)->fetchAssoc();
 						if (!empty($res_parnet_tid['tid'])) {
-							$sql_first_child_tid = "SELECT taxonomy_term_data.tid FROM taxonomy_term_data JOIN taxonomy_term_hierarchy ON taxonomy_term_hierarchy.tid = taxonomy_term_data.tid WHERE taxonomy_term_data.name = '" . $data[3] . "' AND taxonomy_term_hierarchy.parent = '" . $res_parnet_tid['tid'] . "'";
+							$sql_first_child_tid = "SELECT taxonomy_term_data.tid FROM taxonomy_term_data JOIN taxonomy_term_hierarchy ON taxonomy_term_hierarchy.tid = taxonomy_term_data.tid WHERE taxonomy_term_data.name = '" . trim($data[3]) . "' AND taxonomy_term_hierarchy.parent = '" . $res_parnet_tid['tid'] . "'";
 							$res_first_child_tid = db_query($sql_first_child_tid)->fetchAssoc();
 							if ($res_first_child_tid['tid']) {
-								$sql_second_child_tid = "SELECT taxonomy_term_data.tid FROM taxonomy_term_data JOIN taxonomy_term_hierarchy ON taxonomy_term_hierarchy.tid = taxonomy_term_data.tid WHERE taxonomy_term_data.name = '0" . intval($data[4]) . "' AND taxonomy_term_hierarchy.parent = '" . $res_first_child_tid['tid'] . "'";
+								$sql_second_child_tid = "SELECT taxonomy_term_data.tid FROM taxonomy_term_data JOIN taxonomy_term_hierarchy ON taxonomy_term_hierarchy.tid = taxonomy_term_data.tid WHERE taxonomy_term_data.name = '" . intval($data[4]) . "' AND taxonomy_term_hierarchy.parent = '" . $res_first_child_tid['tid'] . "'";
 								$res_second_child_tid = db_query($sql_second_child_tid)->fetchAssoc();
 								if (!empty($res_second_child_tid['tid'])) {
 									$node->field_branch['und'][0]['tid'] = $res_second_child_tid['tid'];
