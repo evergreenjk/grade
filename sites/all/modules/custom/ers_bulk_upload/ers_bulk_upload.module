@@ -60,7 +60,8 @@ function _ers_bulk_upload_student($file) {
 			$num = count($data);
 			if ($row > 1) {
 				if (!empty($num)) {
-					if (!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6]) && !empty($data[7])) {
+					$data[1] = array();
+					if (!empty($data[0]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6]) && !empty($data[7])) {
 						$node = new stdClass();
 						$node->type = 'student';
 						node_object_prepare($node);
@@ -110,7 +111,8 @@ function _ers_bulk_upload_subject($file) {
 			$num = count($data);
 			if ($row > 1) {
 				if (!empty($num)) {
-					if (!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6])) {
+					$data[6] = array();
+					if (!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5])) {
 						$node = new stdClass();
 						$node->type = 'subject';
 						node_object_prepare($node);
