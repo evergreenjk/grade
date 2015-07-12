@@ -56,11 +56,12 @@ function _ers_bulk_upload_callback_submit($form, &$form_state) {
 function _ers_bulk_upload_student($file) {
 	$row = 1;
 	if (($handle = fopen($file, "r")) !== FALSE) {
+		$data[1] = '';
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 			$num = count($data);
 			if ($row > 1) {
 				if (!empty($num)) {
-					$data[1] = '';
+					
 					if (!empty($data[0]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6]) && !empty($data[7])) {
 						$node = new stdClass();
 						$node->type = 'student';
@@ -107,11 +108,12 @@ function _ers_bulk_upload_student($file) {
 function _ers_bulk_upload_subject($file) {
 	$row = 1;
 	if (($handle = fopen($file, "r")) !== FALSE) {
+		$data[6] = array();
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 			$num = count($data);
 			if ($row > 1) {
 				if (!empty($num)) {
-					$data[6] = array();
+					
 					if (!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5])) {
 						$node = new stdClass();
 						$node->type = 'subject';
