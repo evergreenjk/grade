@@ -60,7 +60,7 @@ function _ers_bulk_upload_student($file) {
 			$num = count($data);
 			if ($row > 1) {
 				if (!empty($num)) {
-					if (!empty(trim($data[0])) && !empty(trim($data[1])) && !empty(trim($data[2])) && !empty(trim($data[3])) && !empty(trim($data[4])) && !empty(trim($data[5])) && !empty(trim($data[6])) && !empty($data[7])) {
+					if (!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6]) && !empty($data[7])) {
 						$node = new stdClass();
 						$node->type = 'student';
 						node_object_prepare($node);
@@ -110,7 +110,7 @@ function _ers_bulk_upload_subject($file) {
 			$num = count($data);
 			if ($row > 1) {
 				if (!empty($num)) {
-					if (!empty(trim($data[0])) && !empty(trim($data[1])) && !empty(trim($data[2])) && !empty(trim($data[3])) && !empty(trim($data[4])) && !empty(trim($data[5])) && !empty(trim($data[6]))) {
+					if (!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6])) {
 						$node = new stdClass();
 						$node->type = 'subject';
 						node_object_prepare($node);
@@ -131,8 +131,8 @@ function _ers_bulk_upload_subject($file) {
 								}
 							}
 						}
-						$section = explode(",", trim($data[5]));
-						$staffs = explode(",", trim($data[6]));
+						$section = explode(",", $data[5]);
+						$staffs = explode(",", $data[6]);
 						for ($i = 0; $i < count($section); $i++) {
 							$field_collection_item = _ers_bulk_upload_subject_save_field_collection($section[$i], $staffs[$i], $node);
 							$field_collection_item->save();
@@ -172,7 +172,7 @@ function _ers_bulk_upload_marks($file) {
 			$num = count($data);
 			if ($row > 1) {
 				if (!empty($num)) {
-					if (!empty(trim($data[0])) && !empty(trim($data[1]))) {
+					if (!empty($data[0]) && !empty($data[1])) {
 						$subject_nid = 0;
 						$student_nid = 0;
 						$sql_student = "SELECT entity_id FROM field_data_field_stu_roll_no WHERE field_stu_roll_no_value = '" . trim($data[1]) . "'";
