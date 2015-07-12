@@ -60,7 +60,7 @@ function _ers_bulk_upload_student($file) {
 			$num = count($data);
 			if ($row > 1) {
 				if (!empty($num)) {
-					$data[1] = array();
+					$data[1] = '';
 					if (!empty($data[0]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6]) && !empty($data[7])) {
 						$node = new stdClass();
 						$node->type = 'student';
@@ -68,7 +68,7 @@ function _ers_bulk_upload_student($file) {
 						$node->language = 'en';
 						$node->title = trim($data[0]). '-' . trim($data[2]);
 						$node->field_stu_roll_no['und'][0]['value'] = trim($data[0]);
-						$node->field_stu_reg_no['und'][0]['value'] = trim($data[1]);
+						$node->field_stu_reg_no['und'][0]['value'] = isset($data[1])? trim($data[1]): $data[1];
 						$node->field_student_name['und'][0]['value'] = trim($data[2]);
 						$sql_section = "SELECT tid FROM taxonomy_term_data WHERE name = '" . trim($data[3]) . "'";
 						$res_section = db_query($sql_section)->fetchAssoc();
