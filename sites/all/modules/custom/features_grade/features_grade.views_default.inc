@@ -211,58 +211,69 @@ function features_grade_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
   $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['style_plugin'] = 'editableviews_table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'field_stu_reg_no' => 'field_stu_reg_no',
     'field_stu_roll_no' => 'field_stu_roll_no',
-    'field_section' => 'field_section',
+    'field_stu_reg_no_editable' => 'field_stu_reg_no_editable',
     'field_student_name' => 'field_student_name',
+    'field_branch' => 'field_branch',
+    'field_section' => 'field_section',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
-    'field_stu_reg_no' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
     'field_stu_roll_no' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_section' => array(
+    'field_stu_reg_no_editable' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_student_name' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_branch' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_section' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
   );
-  /* Field: Content: Registration No */
-  $handler->display->display_options['fields']['field_stu_reg_no']['id'] = 'field_stu_reg_no';
-  $handler->display->display_options['fields']['field_stu_reg_no']['table'] = 'field_data_field_stu_reg_no';
-  $handler->display->display_options['fields']['field_stu_reg_no']['field'] = 'field_stu_reg_no';
   /* Field: Content: Roll No */
   $handler->display->display_options['fields']['field_stu_roll_no']['id'] = 'field_stu_roll_no';
   $handler->display->display_options['fields']['field_stu_roll_no']['table'] = 'field_data_field_stu_roll_no';
   $handler->display->display_options['fields']['field_stu_roll_no']['field'] = 'field_stu_roll_no';
-  /* Field: Content: Select Section */
-  $handler->display->display_options['fields']['field_section']['id'] = 'field_section';
-  $handler->display->display_options['fields']['field_section']['table'] = 'field_data_field_section';
-  $handler->display->display_options['fields']['field_section']['field'] = 'field_section';
+  /* Field: Content: Registration No (editable) */
+  $handler->display->display_options['fields']['field_stu_reg_no_editable']['id'] = 'field_stu_reg_no_editable';
+  $handler->display->display_options['fields']['field_stu_reg_no_editable']['table'] = 'field_data_field_stu_reg_no';
+  $handler->display->display_options['fields']['field_stu_reg_no_editable']['field'] = 'field_stu_reg_no_editable';
+  $handler->display->display_options['fields']['field_stu_reg_no_editable']['label'] = 'Registration No';
+  $handler->display->display_options['fields']['field_stu_reg_no_editable']['widget_type'] = '0';
+  $handler->display->display_options['fields']['field_stu_reg_no_editable']['suppress_label'] = 0;
+  $handler->display->display_options['fields']['field_stu_reg_no_editable']['suppress_description'] = 0;
   /* Field: Content: Student Name */
   $handler->display->display_options['fields']['field_student_name']['id'] = 'field_student_name';
   $handler->display->display_options['fields']['field_student_name']['table'] = 'field_data_field_student_name';
@@ -271,10 +282,17 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['field_branch']['id'] = 'field_branch';
   $handler->display->display_options['fields']['field_branch']['table'] = 'field_data_field_branch';
   $handler->display->display_options['fields']['field_branch']['field'] = 'field_branch';
+  $handler->display->display_options['fields']['field_branch']['label'] = 'Semester';
   $handler->display->display_options['fields']['field_branch']['type'] = 'cshs_term_reference_hierarchical_text';
   $handler->display->display_options['fields']['field_branch']['settings'] = array(
     'separator' => ' » ',
   );
+  /* Field: Content: Select Section */
+  $handler->display->display_options['fields']['field_section']['id'] = 'field_section';
+  $handler->display->display_options['fields']['field_section']['table'] = 'field_data_field_section';
+  $handler->display->display_options['fields']['field_section']['field'] = 'field_section';
+  $handler->display->display_options['fields']['field_section']['label'] = 'Section';
+  $handler->display->display_options['fields']['field_section']['type'] = 'taxonomy_term_reference_plain';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -289,6 +307,10 @@ function features_grade_views_default_views() {
   $handler->display->display_options['arguments']['term_node_tid_depth']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['term_node_tid_depth']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['term_node_tid_depth']['depth'] = '2';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -296,24 +318,6 @@ function features_grade_views_default_views() {
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Has taxonomy term */
-  $handler->display->display_options['filters']['tid']['id'] = 'tid';
-  $handler->display->display_options['filters']['tid']['table'] = 'taxonomy_index';
-  $handler->display->display_options['filters']['tid']['field'] = 'tid';
-  $handler->display->display_options['filters']['tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['tid']['expose']['operator_id'] = 'tid_op';
-  $handler->display->display_options['filters']['tid']['expose']['label'] = 'Has taxonomy term';
-  $handler->display->display_options['filters']['tid']['expose']['operator'] = 'tid_op';
-  $handler->display->display_options['filters']['tid']['expose']['identifier'] = 'tid';
-  $handler->display->display_options['filters']['tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-  );
-  $handler->display->display_options['filters']['tid']['type'] = 'select';
-  $handler->display->display_options['filters']['tid']['vocabulary'] = 'branch';
-  $handler->display->display_options['filters']['tid']['hierarchy'] = 1;
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
@@ -321,6 +325,97 @@ function features_grade_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'student' => 'student',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Roll No (field_stu_roll_no) */
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['id'] = 'field_stu_roll_no_value';
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['table'] = 'field_data_field_stu_roll_no';
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['field'] = 'field_stu_roll_no_value';
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['operator_id'] = 'field_stu_roll_no_value_op';
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['label'] = 'Roll No';
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['operator'] = 'field_stu_roll_no_value_op';
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['identifier'] = 'field_stu_roll_no_value';
+  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  /* Filter criterion: Content: Registration No (field_stu_reg_no) */
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['id'] = 'field_stu_reg_no_value';
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['table'] = 'field_data_field_stu_reg_no';
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['field'] = 'field_stu_reg_no_value';
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['expose']['operator_id'] = 'field_stu_reg_no_value_op';
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['expose']['label'] = 'Registration No';
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['expose']['operator'] = 'field_stu_reg_no_value_op';
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['expose']['identifier'] = 'field_stu_reg_no_value';
+  $handler->display->display_options['filters']['field_stu_reg_no_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  /* Filter criterion: Content: Student Name (field_student_name) */
+  $handler->display->display_options['filters']['field_student_name_value']['id'] = 'field_student_name_value';
+  $handler->display->display_options['filters']['field_student_name_value']['table'] = 'field_data_field_student_name';
+  $handler->display->display_options['filters']['field_student_name_value']['field'] = 'field_student_name_value';
+  $handler->display->display_options['filters']['field_student_name_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_student_name_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_student_name_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_student_name_value']['expose']['operator_id'] = 'field_student_name_value_op';
+  $handler->display->display_options['filters']['field_student_name_value']['expose']['label'] = 'Student Name';
+  $handler->display->display_options['filters']['field_student_name_value']['expose']['operator'] = 'field_student_name_value_op';
+  $handler->display->display_options['filters']['field_student_name_value']['expose']['identifier'] = 'field_student_name_value';
+  $handler->display->display_options['filters']['field_student_name_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  /* Filter criterion: Content: Select Section (field_section) */
+  $handler->display->display_options['filters']['field_section_tid']['id'] = 'field_section_tid';
+  $handler->display->display_options['filters']['field_section_tid']['table'] = 'field_data_field_section';
+  $handler->display->display_options['filters']['field_section_tid']['field'] = 'field_section_tid';
+  $handler->display->display_options['filters']['field_section_tid']['group'] = 2;
+  $handler->display->display_options['filters']['field_section_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_section_tid']['expose']['operator_id'] = 'field_section_tid_op';
+  $handler->display->display_options['filters']['field_section_tid']['expose']['label'] = 'Select Section';
+  $handler->display->display_options['filters']['field_section_tid']['expose']['operator'] = 'field_section_tid_op';
+  $handler->display->display_options['filters']['field_section_tid']['expose']['identifier'] = 'field_section_tid';
+  $handler->display->display_options['filters']['field_section_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  $handler->display->display_options['filters']['field_section_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_section_tid']['vocabulary'] = 'section';
+  $handler->display->display_options['filters']['field_section_tid']['hierarchy'] = 1;
+  /* Filter criterion: Content: Select Branch (field_branch) */
+  $handler->display->display_options['filters']['field_branch_tid']['id'] = 'field_branch_tid';
+  $handler->display->display_options['filters']['field_branch_tid']['table'] = 'field_data_field_branch';
+  $handler->display->display_options['filters']['field_branch_tid']['field'] = 'field_branch_tid';
+  $handler->display->display_options['filters']['field_branch_tid']['value'] = array(
+    0 => '_none',
+  );
+  $handler->display->display_options['filters']['field_branch_tid']['group'] = 2;
+  $handler->display->display_options['filters']['field_branch_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['operator_id'] = 'field_branch_tid_op';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['label'] = 'Select Semester';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['operator'] = 'field_branch_tid_op';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['identifier'] = 'field_branch_tid';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  $handler->display->display_options['filters']['field_branch_tid']['vocabulary'] = 'branch';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -525,12 +620,14 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['field_section']['field'] = 'field_section';
   $handler->display->display_options['fields']['field_section']['relationship'] = 'field_mark_student_nid';
   $handler->display->display_options['fields']['field_section']['label'] = 'Section';
+  $handler->display->display_options['fields']['field_section']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_section']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Content: Subject Name */
   $handler->display->display_options['fields']['field_subject_name']['id'] = 'field_subject_name';
   $handler->display->display_options['fields']['field_subject_name']['table'] = 'field_data_field_subject_name';
   $handler->display->display_options['fields']['field_subject_name']['field'] = 'field_subject_name';
   $handler->display->display_options['fields']['field_subject_name']['relationship'] = 'field_mark_subject_nid';
+  $handler->display->display_options['fields']['field_subject_name']['exclude'] = TRUE;
   /* Field: Content: Test Mark1 (editable) */
   $handler->display->display_options['fields']['field_mark_score_editable']['id'] = 'field_mark_score_editable';
   $handler->display->display_options['fields']['field_mark_score_editable']['table'] = 'field_data_field_mark_score';
@@ -548,6 +645,7 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['field_mark_score2_editable']['table'] = 'field_data_field_mark_score2';
   $handler->display->display_options['fields']['field_mark_score2_editable']['field'] = 'field_mark_score2_editable';
   $handler->display->display_options['fields']['field_mark_score2_editable']['label'] = 'Test Mark2';
+  $handler->display->display_options['fields']['field_mark_score2_editable']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_mark_score2_editable']['settings'] = array(
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
@@ -560,6 +658,7 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['field_mark_score3_editable']['table'] = 'field_data_field_mark_score3';
   $handler->display->display_options['fields']['field_mark_score3_editable']['field'] = 'field_mark_score3_editable';
   $handler->display->display_options['fields']['field_mark_score3_editable']['label'] = 'Test Mark3';
+  $handler->display->display_options['fields']['field_mark_score3_editable']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_mark_score3_editable']['settings'] = array(
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
