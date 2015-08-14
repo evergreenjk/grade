@@ -73,6 +73,7 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'node';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['label'] = 'Select';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['display_type'] = '1';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['enable_select_all_pages'] = 0;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['row_clickable'] = 1;
@@ -102,18 +103,20 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['field_subject_code']['id'] = 'field_subject_code';
   $handler->display->display_options['fields']['field_subject_code']['table'] = 'field_data_field_subject_code';
   $handler->display->display_options['fields']['field_subject_code']['field'] = 'field_subject_code';
+  $handler->display->display_options['fields']['field_subject_code']['exclude'] = TRUE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Subject Name';
+  $handler->display->display_options['fields']['title']['label'] = 'Subject Code - Subject Name';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   /* Field: Content: Select Branch */
   $handler->display->display_options['fields']['field_branch']['id'] = 'field_branch';
   $handler->display->display_options['fields']['field_branch']['table'] = 'field_data_field_branch';
   $handler->display->display_options['fields']['field_branch']['field'] = 'field_branch';
-  $handler->display->display_options['fields']['field_branch']['label'] = 'Semester';
+  $handler->display->display_options['fields']['field_branch']['label'] = 'Degree';
+  $handler->display->display_options['fields']['field_branch']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_branch']['type'] = 'cshs_term_reference_hierarchical_text';
   $handler->display->display_options['fields']['field_branch']['settings'] = array(
     'separator' => ' » ',
@@ -887,13 +890,14 @@ $attended =  $passed+$failed;
   $handler->display->display_options['fields']['field_mark_score_editable']['table'] = 'field_data_field_mark_score';
   $handler->display->display_options['fields']['field_mark_score_editable']['field'] = 'field_mark_score_editable';
   $handler->display->display_options['fields']['field_mark_score_editable']['label'] = 'Test Mark1';
+  $handler->display->display_options['fields']['field_mark_score_editable']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_mark_score_editable']['settings'] = array(
     'thousand_separator' => '',
-    'prefix_suffix' => 1,
+    'prefix_suffix' => 0,
   );
-  $handler->display->display_options['fields']['field_mark_score_editable']['widget_type'] = '0';
-  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_label'] = 0;
-  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_description'] = 0;
+  $handler->display->display_options['fields']['field_mark_score_editable']['widget_type'] = 'number';
+  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_label'] = 1;
+  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_description'] = 1;
   /* Field: Content: Test Mark2 (editable) */
   $handler->display->display_options['fields']['field_mark_score2_editable']['id'] = 'field_mark_score2_editable';
   $handler->display->display_options['fields']['field_mark_score2_editable']['table'] = 'field_data_field_mark_score2';
