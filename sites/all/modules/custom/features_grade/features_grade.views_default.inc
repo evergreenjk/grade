@@ -74,7 +74,7 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'node';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['display_type'] = '1';
-  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['enable_select_all_pages'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['enable_select_all_pages'] = 0;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['row_clickable'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '25';
@@ -86,6 +86,15 @@ function features_grade_views_default_views() {
       'label' => 'Enter marks',
       'settings' => array(
         'url' => 'mark-entry/',
+      ),
+    ),
+    'action::ers_bulk_upload_action' => array(
+      'selected' => 1,
+      'skip_confirmation' => 1,
+      'override_label' => 1,
+      'label' => 'View Subject Wise Report',
+      'settings' => array(
+        'url' => 'admin/reports/marks/',
       ),
     ),
   );
@@ -190,7 +199,13 @@ function features_grade_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'subject/list';
+  $handler->display->display_options['path'] = 'admin/subject/list';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'Subject List';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'main-menu';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
   $export['bulk_operation'] = $view;
 
   $view = new view();
@@ -205,7 +220,7 @@ function features_grade_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Marks for %1';
+  $handler->display->display_options['title'] = 'Examination Report for %1';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -297,7 +312,6 @@ $attempt = 0;
 foreach($results as $result){ 
  $entity_detail = $result->_field_data[\'nid\'][\'entity\'];
  $mark1 = $entity_detail->field_mark_score[\'und\'][0][\'value\'];
-
  if($mark1 >= 50){
    $passed =  $passed + 1;
  }
