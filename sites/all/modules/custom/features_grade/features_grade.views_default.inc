@@ -240,38 +240,38 @@ function features_grade_views_default_views() {
     'field_mark_score2_editable' => 'field_mark_score2_editable',
     'field_mark_score3_editable' => 'field_mark_score3_editable',
   );
-  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['default'] = 'field_stu_roll_no';
   $handler->display->display_options['style_options']['info'] = array(
     'field_stu_roll_no' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_stu_reg_no' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_student_name' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_section' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_subject_name' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -775,7 +775,7 @@ $attended =  $passed+$failed;
     'field_mark_score2_editable' => 'field_mark_score2_editable',
     'field_mark_score3_editable' => 'field_mark_score3_editable',
   );
-  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['default'] = 'field_stu_roll_no';
   $handler->display->display_options['style_options']['info'] = array(
     'field_stu_roll_no' => array(
       'sortable' => 1,
