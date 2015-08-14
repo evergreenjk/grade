@@ -189,7 +189,6 @@ function features_grade_views_default_views() {
   $handler->display->display_options['filters']['field_branch_tid']['group'] = 2;
   $handler->display->display_options['filters']['field_branch_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_branch_tid']['expose']['operator_id'] = 'field_branch_tid_op';
-  $handler->display->display_options['filters']['field_branch_tid']['expose']['label'] = 'Select Semester';
   $handler->display->display_options['filters']['field_branch_tid']['expose']['operator'] = 'field_branch_tid_op';
   $handler->display->display_options['filters']['field_branch_tid']['expose']['identifier'] = 'field_branch_tid';
   $handler->display->display_options['filters']['field_branch_tid']['expose']['remember_roles'] = array(
@@ -199,6 +198,7 @@ function features_grade_views_default_views() {
     4 => 0,
   );
   $handler->display->display_options['filters']['field_branch_tid']['vocabulary'] = 'branch';
+  $handler->display->display_options['filters']['field_branch_tid']['level_labels'] = 'Select Degree,Select Branch,SelectSemester';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -890,14 +890,13 @@ $attended =  $passed+$failed;
   $handler->display->display_options['fields']['field_mark_score_editable']['table'] = 'field_data_field_mark_score';
   $handler->display->display_options['fields']['field_mark_score_editable']['field'] = 'field_mark_score_editable';
   $handler->display->display_options['fields']['field_mark_score_editable']['label'] = 'Test Mark1';
-  $handler->display->display_options['fields']['field_mark_score_editable']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_mark_score_editable']['settings'] = array(
     'thousand_separator' => '',
-    'prefix_suffix' => 0,
+    'prefix_suffix' => 1,
   );
-  $handler->display->display_options['fields']['field_mark_score_editable']['widget_type'] = 'number';
-  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_label'] = 1;
-  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_description'] = 1;
+  $handler->display->display_options['fields']['field_mark_score_editable']['widget_type'] = '0';
+  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_label'] = 0;
+  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_description'] = 0;
   /* Field: Content: Test Mark2 (editable) */
   $handler->display->display_options['fields']['field_mark_score2_editable']['id'] = 'field_mark_score2_editable';
   $handler->display->display_options['fields']['field_mark_score2_editable']['table'] = 'field_data_field_mark_score2';
