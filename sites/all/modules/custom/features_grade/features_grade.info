@@ -77,6 +77,7 @@ features[variable][] = node_submitted_mark
 features[variable][] = node_submitted_student
 features[variable][] = node_submitted_subject
 features[views_view][] = bulk_operation
+features[views_view][] = reports
 features[views_view][] = student_list
 features[views_view][] = subject_reference_view
 features[views_view][] = tt
