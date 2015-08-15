@@ -198,7 +198,7 @@ function features_grade_views_default_views() {
     4 => 0,
   );
   $handler->display->display_options['filters']['field_branch_tid']['vocabulary'] = 'branch';
-  $handler->display->display_options['filters']['field_branch_tid']['level_labels'] = 'Select Degree,Select Branch,SelectSemester';
+  $handler->display->display_options['filters']['field_branch_tid']['level_labels'] = 'Select Degree,Select Branch,Select Semester';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -877,7 +877,6 @@ $attended =  $passed+$failed;
   $handler->display->display_options['fields']['field_section']['field'] = 'field_section';
   $handler->display->display_options['fields']['field_section']['relationship'] = 'field_mark_student_nid';
   $handler->display->display_options['fields']['field_section']['label'] = 'Section';
-  $handler->display->display_options['fields']['field_section']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_section']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Content: Subject Name */
   $handler->display->display_options['fields']['field_subject_name']['id'] = 'field_subject_name';
@@ -890,13 +889,15 @@ $attended =  $passed+$failed;
   $handler->display->display_options['fields']['field_mark_score_editable']['table'] = 'field_data_field_mark_score';
   $handler->display->display_options['fields']['field_mark_score_editable']['field'] = 'field_mark_score_editable';
   $handler->display->display_options['fields']['field_mark_score_editable']['label'] = 'Test Mark1';
+  $handler->display->display_options['fields']['field_mark_score_editable']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_mark_score_editable']['type'] = 'number_unformatted';
   $handler->display->display_options['fields']['field_mark_score_editable']['settings'] = array(
     'thousand_separator' => '',
     'prefix_suffix' => 1,
   );
-  $handler->display->display_options['fields']['field_mark_score_editable']['widget_type'] = '0';
-  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_label'] = 0;
-  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_description'] = 0;
+  $handler->display->display_options['fields']['field_mark_score_editable']['widget_type'] = 'number';
+  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_label'] = 1;
+  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_description'] = 1;
   /* Field: Content: Test Mark2 (editable) */
   $handler->display->display_options['fields']['field_mark_score2_editable']['id'] = 'field_mark_score2_editable';
   $handler->display->display_options['fields']['field_mark_score2_editable']['table'] = 'field_data_field_mark_score2';
@@ -949,41 +950,26 @@ $attended =  $passed+$failed;
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Roll No (field_stu_roll_no) */
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['id'] = 'field_stu_roll_no_value';
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['table'] = 'field_data_field_stu_roll_no';
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['field'] = 'field_stu_roll_no_value';
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['operator'] = 'contains';
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['group'] = 2;
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['operator_id'] = 'field_stu_roll_no_value_op';
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['label'] = 'Roll No';
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['operator'] = 'field_stu_roll_no_value_op';
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['identifier'] = 'field_stu_roll_no_value';
-  $handler->display->display_options['filters']['field_stu_roll_no_value']['expose']['remember_roles'] = array(
+  /* Filter criterion: Content: Select Section (field_section) */
+  $handler->display->display_options['filters']['field_section_tid']['id'] = 'field_section_tid';
+  $handler->display->display_options['filters']['field_section_tid']['table'] = 'field_data_field_section';
+  $handler->display->display_options['filters']['field_section_tid']['field'] = 'field_section_tid';
+  $handler->display->display_options['filters']['field_section_tid']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['filters']['field_section_tid']['value'] = array(
+    0 => '_none',
+  );
+  $handler->display->display_options['filters']['field_section_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_section_tid']['expose']['operator_id'] = 'field_section_tid_op';
+  $handler->display->display_options['filters']['field_section_tid']['expose']['label'] = 'Select Section';
+  $handler->display->display_options['filters']['field_section_tid']['expose']['operator'] = 'field_section_tid_op';
+  $handler->display->display_options['filters']['field_section_tid']['expose']['identifier'] = 'field_section_tid';
+  $handler->display->display_options['filters']['field_section_tid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
     4 => 0,
   );
-  /* Filter criterion: Content: Student Name (field_student_name) */
-  $handler->display->display_options['filters']['field_student_name_value']['id'] = 'field_student_name_value';
-  $handler->display->display_options['filters']['field_student_name_value']['table'] = 'field_data_field_student_name';
-  $handler->display->display_options['filters']['field_student_name_value']['field'] = 'field_student_name_value';
-  $handler->display->display_options['filters']['field_student_name_value']['relationship'] = 'field_mark_student_nid';
-  $handler->display->display_options['filters']['field_student_name_value']['operator'] = 'contains';
-  $handler->display->display_options['filters']['field_student_name_value']['group'] = 2;
-  $handler->display->display_options['filters']['field_student_name_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_student_name_value']['expose']['operator_id'] = 'field_student_name_value_op';
-  $handler->display->display_options['filters']['field_student_name_value']['expose']['label'] = 'Student Name';
-  $handler->display->display_options['filters']['field_student_name_value']['expose']['operator'] = 'field_student_name_value_op';
-  $handler->display->display_options['filters']['field_student_name_value']['expose']['identifier'] = 'field_student_name_value';
-  $handler->display->display_options['filters']['field_student_name_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-  );
+  $handler->display->display_options['filters']['field_section_tid']['vocabulary'] = 'section';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
