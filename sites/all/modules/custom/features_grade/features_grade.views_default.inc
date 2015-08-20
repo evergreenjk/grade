@@ -103,7 +103,6 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['field_subject_code']['id'] = 'field_subject_code';
   $handler->display->display_options['fields']['field_subject_code']['table'] = 'field_data_field_subject_code';
   $handler->display->display_options['fields']['field_subject_code']['field'] = 'field_subject_code';
-  $handler->display->display_options['fields']['field_subject_code']['exclude'] = TRUE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -121,6 +120,15 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['field_branch']['settings'] = array(
     'separator' => ' » ',
   );
+  /* Field: Content: Select Section/Staff */
+  $handler->display->display_options['fields']['field_sub_section_staff']['id'] = 'field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['table'] = 'field_data_field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['field'] = 'field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['type'] = 'field_collection_fields';
+  $handler->display->display_options['fields']['field_sub_section_staff']['settings'] = array(
+    'view_mode' => 'full',
+  );
+  $handler->display->display_options['fields']['field_sub_section_staff']['delta_offset'] = '0';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -198,7 +206,7 @@ function features_grade_views_default_views() {
     4 => 0,
   );
   $handler->display->display_options['filters']['field_branch_tid']['vocabulary'] = 'branch';
-  $handler->display->display_options['filters']['field_branch_tid']['level_labels'] = 'Select Degree,Select Branch,Select Semester';
+  $handler->display->display_options['filters']['field_branch_tid']['level_labels'] = 'Select Degree,Select Branch,Select Semester,Select Section';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -332,10 +340,38 @@ $attended =  $passed+$failed;
 <h5>Number of Students Failed: <?php print $failed; ?> </h5>
 <h5>Absent: <?php print $attempt; ?> </h5>
 <h3>Pass Percentage: <?php print round($passed/$attended*100, 2); ?>% </h3>';
-  /* Footer: Global: Result summary */
-  $handler->display->display_options['footer']['result']['id'] = 'result';
-  $handler->display->display_options['footer']['result']['table'] = 'views';
-  $handler->display->display_options['footer']['result']['field'] = 'result';
+  /* Footer: Global: PHP */
+  $handler->display->display_options['footer']['php']['id'] = 'php';
+  $handler->display->display_options['footer']['php']['table'] = 'views';
+  $handler->display->display_options['footer']['php']['field'] = 'php';
+  $handler->display->display_options['footer']['php']['php_output'] = '<?php
+  // Table header
+  $header = array(
+    \'fruit\' => t(\'Fruit\'),
+  );
+  // Table rows
+  $rows = array(
+    // Row 1
+    array(
+      \'fruit\' => t(\'Apple\'),
+    ),
+    // Row 2
+    array(
+      \'fruit\' => t(\'Banana\'),
+    ),
+    // Row 3
+    array(
+      \'fruit\' => t(\'Orange\'),
+    ),
+  );
+// Format and print out the table.
+  return theme(\'table\', array(
+    \'header\'  => $header,
+    \'rows\'    => $rows,
+    \'id\'      => \'table-articles\',
+    \'class\'   => \'articles\',
+  ));
+?>';
   /* No results behavior: Global: Text area */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
