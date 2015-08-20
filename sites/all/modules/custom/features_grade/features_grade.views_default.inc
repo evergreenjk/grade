@@ -129,6 +129,11 @@ function features_grade_views_default_views() {
     'view_mode' => 'full',
   );
   $handler->display->display_options['fields']['field_sub_section_staff']['delta_offset'] = '0';
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '[field_sub_section_staff] ';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -240,7 +245,205 @@ function features_grade_views_default_views() {
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* Header: Global: PHP */
+  $handler->display->display_options['header']['php']['id'] = 'php';
+  $handler->display->display_options['header']['php']['table'] = 'views';
+  $handler->display->display_options['header']['php']['field'] = 'php';
+  $handler->display->display_options['header']['php']['php_output'] = '<?php
+ $entity_detail  = \'\';
+$mark1 = \'\';
+$passed = 0;
+$failed = 0;
+$attempt = 0;
+foreach($results as $result){ 
+ $entity_detail = $result->_field_data[\'nid\'][\'entity\'];
+ $mark1 = $entity_detail->field_mark_score[\'und\'][0][\'value\'];
+ if($mark1 >= 50){
+   $passed =  $passed + 1;
+ }
+ if($mark1 != -1 && $mark1 < 50){
+   $failed =  $failed + 1;
+ }
+ if($mark1 == -1){
+   $attempt =  $attempt + 1;
+ }
+}
+$attended =  $passed+$failed;
+?>
+<table style="width:100%">
+  <tr>
+    <th>Number of Students Attended</th>
+    <th>Number of Students Passed</th>
+    <th>Number of Students Failed</th>
+    <th>Absent</th>
+    <th>Pass Percentage</th>
+  </tr>
+  <tr>
+    <td><?php print $attended; ?></td>
+    <td><?php print $passed; ?></td>
+    <td><?php print $failed; ?></td>
+    <td><?php print $attempt; ?> </td>
+    <td><?php print round($passed/$attended*100, 2); ?>%</td>
+  </tr>
+</table>';
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No students are imported for the subject %1
+<a href=\'/admin/import-data\'>Click here to import students for selected subject </a>';
+  $handler->display->display_options['empty']['area']['format'] = 'full_html';
+  $handler->display->display_options['empty']['area']['tokenize'] = TRUE;
+  /* Relationship: Content: Student (field_mark_student) */
+  $handler->display->display_options['relationships']['field_mark_student_nid']['id'] = 'field_mark_student_nid';
+  $handler->display->display_options['relationships']['field_mark_student_nid']['table'] = 'field_data_field_mark_student';
+  $handler->display->display_options['relationships']['field_mark_student_nid']['field'] = 'field_mark_student_nid';
+  $handler->display->display_options['relationships']['field_mark_student_nid']['delta'] = '-1';
+  /* Relationship: Content: Subject (field_mark_subject) */
+  $handler->display->display_options['relationships']['field_mark_subject_nid']['id'] = 'field_mark_subject_nid';
+  $handler->display->display_options['relationships']['field_mark_subject_nid']['table'] = 'field_data_field_mark_subject';
+  $handler->display->display_options['relationships']['field_mark_subject_nid']['field'] = 'field_mark_subject_nid';
+  $handler->display->display_options['relationships']['field_mark_subject_nid']['delta'] = '-1';
+  /* Field: Content: Roll No */
+  $handler->display->display_options['fields']['field_stu_roll_no']['id'] = 'field_stu_roll_no';
+  $handler->display->display_options['fields']['field_stu_roll_no']['table'] = 'field_data_field_stu_roll_no';
+  $handler->display->display_options['fields']['field_stu_roll_no']['field'] = 'field_stu_roll_no';
+  $handler->display->display_options['fields']['field_stu_roll_no']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['fields']['field_stu_roll_no']['exclude'] = TRUE;
+  /* Field: Content: Registration No */
+  $handler->display->display_options['fields']['field_stu_reg_no']['id'] = 'field_stu_reg_no';
+  $handler->display->display_options['fields']['field_stu_reg_no']['table'] = 'field_data_field_stu_reg_no';
+  $handler->display->display_options['fields']['field_stu_reg_no']['field'] = 'field_stu_reg_no';
+  $handler->display->display_options['fields']['field_stu_reg_no']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['fields']['field_stu_reg_no']['exclude'] = TRUE;
+  /* Field: Content: Student Name */
+  $handler->display->display_options['fields']['field_student_name']['id'] = 'field_student_name';
+  $handler->display->display_options['fields']['field_student_name']['table'] = 'field_data_field_student_name';
+  $handler->display->display_options['fields']['field_student_name']['field'] = 'field_student_name';
+  $handler->display->display_options['fields']['field_student_name']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['fields']['field_student_name']['exclude'] = TRUE;
+  /* Field: Content: Select Section */
+  $handler->display->display_options['fields']['field_section']['id'] = 'field_section';
+  $handler->display->display_options['fields']['field_section']['table'] = 'field_data_field_section';
+  $handler->display->display_options['fields']['field_section']['field'] = 'field_section';
+  $handler->display->display_options['fields']['field_section']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['fields']['field_section']['label'] = 'Section';
+  $handler->display->display_options['fields']['field_section']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_section']['type'] = 'taxonomy_term_reference_plain';
+  /* Field: Content: Subject Name */
+  $handler->display->display_options['fields']['field_subject_name']['id'] = 'field_subject_name';
+  $handler->display->display_options['fields']['field_subject_name']['table'] = 'field_data_field_subject_name';
+  $handler->display->display_options['fields']['field_subject_name']['field'] = 'field_subject_name';
+  $handler->display->display_options['fields']['field_subject_name']['relationship'] = 'field_mark_subject_nid';
+  $handler->display->display_options['fields']['field_subject_name']['exclude'] = TRUE;
+  /* Field: Content: Test Mark1 (editable) */
+  $handler->display->display_options['fields']['field_mark_score_editable']['id'] = 'field_mark_score_editable';
+  $handler->display->display_options['fields']['field_mark_score_editable']['table'] = 'field_data_field_mark_score';
+  $handler->display->display_options['fields']['field_mark_score_editable']['field'] = 'field_mark_score_editable';
+  $handler->display->display_options['fields']['field_mark_score_editable']['label'] = 'Test Mark1';
+  $handler->display->display_options['fields']['field_mark_score_editable']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_mark_score_editable']['settings'] = array(
+    'thousand_separator' => '',
+    'prefix_suffix' => 1,
+  );
+  $handler->display->display_options['fields']['field_mark_score_editable']['widget_type'] = '0';
+  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_label'] = 0;
+  $handler->display->display_options['fields']['field_mark_score_editable']['suppress_description'] = 0;
+  /* Field: Content: Test Mark2 (editable) */
+  $handler->display->display_options['fields']['field_mark_score2_editable']['id'] = 'field_mark_score2_editable';
+  $handler->display->display_options['fields']['field_mark_score2_editable']['table'] = 'field_data_field_mark_score2';
+  $handler->display->display_options['fields']['field_mark_score2_editable']['field'] = 'field_mark_score2_editable';
+  $handler->display->display_options['fields']['field_mark_score2_editable']['label'] = 'Test Mark2';
+  $handler->display->display_options['fields']['field_mark_score2_editable']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_mark_score2_editable']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  $handler->display->display_options['fields']['field_mark_score2_editable']['widget_type'] = '0';
+  $handler->display->display_options['fields']['field_mark_score2_editable']['suppress_label'] = 0;
+  $handler->display->display_options['fields']['field_mark_score2_editable']['suppress_description'] = 0;
+  /* Field: Content: Test Mark3 (editable) */
+  $handler->display->display_options['fields']['field_mark_score3_editable']['id'] = 'field_mark_score3_editable';
+  $handler->display->display_options['fields']['field_mark_score3_editable']['table'] = 'field_data_field_mark_score3';
+  $handler->display->display_options['fields']['field_mark_score3_editable']['field'] = 'field_mark_score3_editable';
+  $handler->display->display_options['fields']['field_mark_score3_editable']['label'] = 'Test Mark3';
+  $handler->display->display_options['fields']['field_mark_score3_editable']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_mark_score3_editable']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  $handler->display->display_options['fields']['field_mark_score3_editable']['widget_type'] = '0';
+  $handler->display->display_options['fields']['field_mark_score3_editable']['suppress_label'] = 0;
+  $handler->display->display_options['fields']['field_mark_score3_editable']['suppress_description'] = 0;
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = ' ';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Content: Subject (field_mark_subject) */
+  $handler->display->display_options['arguments']['field_mark_subject_nid']['id'] = 'field_mark_subject_nid';
+  $handler->display->display_options['arguments']['field_mark_subject_nid']['table'] = 'field_data_field_mark_subject';
+  $handler->display->display_options['arguments']['field_mark_subject_nid']['field'] = 'field_mark_subject_nid';
+  $handler->display->display_options['arguments']['field_mark_subject_nid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_mark_subject_nid']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['field_mark_subject_nid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_mark_subject_nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_mark_subject_nid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_mark_subject_nid']['break_phrase'] = TRUE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'admin/reports/marks/%';
+  $export['reports'] = $view;
+
+  $view = new view();
+  $view->name = 'semster_examination_reports';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Semster Examination Reports';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Semester Report';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'field_stu_roll_no',
+      'rendered' => 1,
+      'rendered_strip' => 0,
+    ),
+  );
   $handler->display->display_options['style_options']['columns'] = array(
     'field_stu_roll_no' => 'field_stu_roll_no',
     'field_stu_reg_no' => 'field_stu_reg_no',
@@ -250,6 +453,7 @@ function features_grade_views_default_views() {
     'field_mark_score_editable' => 'field_mark_score_editable',
     'field_mark_score2_editable' => 'field_mark_score2_editable',
     'field_mark_score3_editable' => 'field_mark_score3_editable',
+    'nothing' => 'nothing',
   );
   $handler->display->display_options['style_options']['default'] = 'field_stu_roll_no';
   $handler->display->display_options['style_options']['info'] = array(
@@ -261,28 +465,28 @@ function features_grade_views_default_views() {
       'empty_column' => 0,
     ),
     'field_stu_reg_no' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_student_name' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_section' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_subject_name' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -305,6 +509,11 @@ function features_grade_views_default_views() {
     'field_mark_score3_editable' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -334,44 +543,25 @@ foreach($results as $result){
  }
 }
 $attended =  $passed+$failed;
+$pieces = explode(\',\', arg(3));
+$attended_sem =  count($results)/count($pieces);
 ?>
-<h5>Number of Students Attended: <?php print $attended; ?> </h5>
-<h5>Number of Students Passed: <?php print $passed; ?> </h5>
-<h5>Number of Students Failed: <?php print $failed; ?> </h5>
-<h5>Absent: <?php print $attempt; ?> </h5>
-<h3>Pass Percentage: <?php print round($passed/$attended*100, 2); ?>% </h3>';
-  /* Footer: Global: PHP */
-  $handler->display->display_options['footer']['php']['id'] = 'php';
-  $handler->display->display_options['footer']['php']['table'] = 'views';
-  $handler->display->display_options['footer']['php']['field'] = 'php';
-  $handler->display->display_options['footer']['php']['php_output'] = '<?php
-  // Table header
-  $header = array(
-    \'fruit\' => t(\'Fruit\'),
-  );
-  // Table rows
-  $rows = array(
-    // Row 1
-    array(
-      \'fruit\' => t(\'Apple\'),
-    ),
-    // Row 2
-    array(
-      \'fruit\' => t(\'Banana\'),
-    ),
-    // Row 3
-    array(
-      \'fruit\' => t(\'Orange\'),
-    ),
-  );
-// Format and print out the table.
-  return theme(\'table\', array(
-    \'header\'  => $header,
-    \'rows\'    => $rows,
-    \'id\'      => \'table-articles\',
-    \'class\'   => \'articles\',
-  ));
-?>';
+<table style="width:100%">
+  <tr>
+    <th>Number of Students Attended</th>
+    <th>Number of Students Passed</th>
+    <th>Number of Students Failed</th>
+    <th>Absent</th>
+    <th>Pass Percentage</th>
+  </tr>
+  <tr>
+    <td><?php print $attended_sem; ?></td>
+    <td><?php print $passed; ?></td>
+    <td><?php print $failed; ?></td>
+    <td><?php print $attempt; ?> </td>
+    <td><?php print round($passed/$attended*100, 2); ?>%</td>
+  </tr>
+</table>';
   /* No results behavior: Global: Text area */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -396,16 +586,22 @@ $attended =  $passed+$failed;
   $handler->display->display_options['fields']['field_stu_roll_no']['table'] = 'field_data_field_stu_roll_no';
   $handler->display->display_options['fields']['field_stu_roll_no']['field'] = 'field_stu_roll_no';
   $handler->display->display_options['fields']['field_stu_roll_no']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['fields']['field_stu_roll_no']['label'] = '';
+  $handler->display->display_options['fields']['field_stu_roll_no']['element_label_colon'] = FALSE;
   /* Field: Content: Registration No */
   $handler->display->display_options['fields']['field_stu_reg_no']['id'] = 'field_stu_reg_no';
   $handler->display->display_options['fields']['field_stu_reg_no']['table'] = 'field_data_field_stu_reg_no';
   $handler->display->display_options['fields']['field_stu_reg_no']['field'] = 'field_stu_reg_no';
   $handler->display->display_options['fields']['field_stu_reg_no']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['fields']['field_stu_reg_no']['label'] = '';
+  $handler->display->display_options['fields']['field_stu_reg_no']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_stu_reg_no']['element_label_colon'] = FALSE;
   /* Field: Content: Student Name */
   $handler->display->display_options['fields']['field_student_name']['id'] = 'field_student_name';
   $handler->display->display_options['fields']['field_student_name']['table'] = 'field_data_field_student_name';
   $handler->display->display_options['fields']['field_student_name']['field'] = 'field_student_name';
   $handler->display->display_options['fields']['field_student_name']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['fields']['field_student_name']['exclude'] = TRUE;
   /* Field: Content: Select Section */
   $handler->display->display_options['fields']['field_section']['id'] = 'field_section';
   $handler->display->display_options['fields']['field_section']['table'] = 'field_data_field_section';
@@ -458,11 +654,12 @@ $attended =  $passed+$failed;
   $handler->display->display_options['fields']['field_mark_score3_editable']['widget_type'] = '0';
   $handler->display->display_options['fields']['field_mark_score3_editable']['suppress_label'] = 0;
   $handler->display->display_options['fields']['field_mark_score3_editable']['suppress_description'] = 0;
-  /* Sort criterion: Content: Post date */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'node';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   /* Contextual filter: Content: Subject (field_mark_subject) */
   $handler->display->display_options['arguments']['field_mark_subject_nid']['id'] = 'field_mark_subject_nid';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['table'] = 'field_data_field_mark_subject';
@@ -483,8 +680,117 @@ $attended =  $passed+$failed;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/reports/marks/%';
-  $export['reports'] = $view;
+  $handler->display->display_options['path'] = 'admin/reports/sem/%';
+  $export['semster_examination_reports'] = $view;
+
+  $view = new view();
+  $view->name = 'semster_list';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'semster_list';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Subject List';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '0';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* Footer: Global: PHP */
+  $handler->display->display_options['footer']['php']['id'] = 'php';
+  $handler->display->display_options['footer']['php']['table'] = 'views';
+  $handler->display->display_options['footer']['php']['field'] = 'php';
+  $handler->display->display_options['footer']['php']['php_output'] = '<?php
+$subject_nids = \'\';
+$prefix = \'\';
+foreach($results as $result){
+$subject_nids .= $prefix.$result->nid;
+$prefix = \',\';
+}
+$sem_url = \'admin/reports/sem/\'.$subject_nids;
+print l(\'Semester Report\', $sem_url);
+?>';
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = '';
+  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '&nbsp;';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'subject' => 'subject',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Select Branch (field_branch) */
+  $handler->display->display_options['filters']['field_branch_tid']['id'] = 'field_branch_tid';
+  $handler->display->display_options['filters']['field_branch_tid']['table'] = 'field_data_field_branch';
+  $handler->display->display_options['filters']['field_branch_tid']['field'] = 'field_branch_tid';
+  $handler->display->display_options['filters']['field_branch_tid']['value'] = array(
+    0 => '_none',
+  );
+  $handler->display->display_options['filters']['field_branch_tid']['group'] = 2;
+  $handler->display->display_options['filters']['field_branch_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['operator_id'] = 'field_branch_tid_op';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['operator'] = 'field_branch_tid_op';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['identifier'] = 'field_branch_tid';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  $handler->display->display_options['filters']['field_branch_tid']['vocabulary'] = 'branch';
+  $handler->display->display_options['filters']['field_branch_tid']['level_labels'] = 'Select Degree,Select Branch,Select Semester,Select Section';
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'admin/semester/list';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'Semester List';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'main-menu';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+  $export['semster_list'] = $view;
 
   $view = new view();
   $view->name = 'student_list';
