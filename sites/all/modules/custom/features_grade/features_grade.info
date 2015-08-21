@@ -61,7 +61,6 @@ features[menu_links][] = main-menu_home:<front>
 features[menu_links][] = main-menu_mark-entry:admin/subject/list
 features[menu_links][] = main-menu_semester-list:admin/semester/list
 features[menu_links][] = main-menu_subject-list:admin/subject/list
-features[menu_links][] = user-menu_log-out:user/logout
 features[menu_links][] = user-menu_user-account:user
 features[node][] = mark
 features[node][] = student

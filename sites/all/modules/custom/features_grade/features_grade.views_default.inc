@@ -439,7 +439,7 @@ $attended =  $passed+$failed;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['grouping'] = array(
     0 => array(
-      'field' => 'field_stu_roll_no',
+      'field' => 'field_subject_name',
       'rendered' => 1,
       'rendered_strip' => 0,
     ),
@@ -523,45 +523,59 @@ $attended =  $passed+$failed;
   $handler->display->display_options['header']['php']['id'] = 'php';
   $handler->display->display_options['header']['php']['table'] = 'views';
   $handler->display->display_options['header']['php']['field'] = 'php';
-  $handler->display->display_options['header']['php']['php_output'] = '<?php
- $entity_detail  = \'\';
+  $handler->display->display_options['header']['php']['php_output'] = '<?php 
+$subject_nids = array();
+$data_set = array();
 $mark1 = \'\';
+foreach($results as $result){
+	$subject_nids[] = $result->node_field_data_field_mark_subject_nid;
+	$subject_names[] = $result->field_field_subject_name[0][\'raw\'][\'value\'];
+        $data_sets[$result->node_field_data_field_mark_subject_nid][] = array(
+          \'snid\'=> $result->node_field_data_field_mark_subject_nid,
+          \'sname\' =>  $result->field_field_subject_name[0][\'raw\'][\'value\'],
+          \'mark1\' => $result-> field_field_mark_score_editable[0][\'raw\'][\'value\']
+);
+}
+//$snids = array_unique($subject_names);
+
+foreach($data_sets as $key => $data_set){
 $passed = 0;
 $failed = 0;
 $attempt = 0;
-foreach($results as $result){ 
- $entity_detail = $result->_field_data[\'nid\'][\'entity\'];
- $mark1 = $entity_detail->field_mark_score[\'und\'][0][\'value\'];
- if($mark1 >= 50){
-   $passed =  $passed + 1;
- }
- if($mark1 != -1 && $mark1 < 50){
+//print \'<pre>\'. print_r($data_set, 1) .\'</pre>\';
+ $subject_name = $data_set[0][\'sname\'];
+foreach($data_set as $mark_data){
+  $mark1 = $mark_data[\'mark1\'];
+  if($mark1 >= 50){
+    $passed =  $passed + 1;
+  }
+  if($mark1 != -1 && $mark1 < 50){
    $failed =  $failed + 1;
+  }
+  if($mark1 == -1){
+    $attempt =  $attempt + 1;
+  }
  }
- if($mark1 == -1){
-   $attempt =  $attempt + 1;
- }
-}
-$attended =  $passed+$failed;
-$pieces = explode(\',\', arg(3));
-$attended_sem =  count($results)/count($pieces);
-?>
-<table style="width:100%">
-  <tr>
-    <th>Number of Students Attended</th>
+ $attended =  $passed+$failed;
+print \'<table style="width:100%">\';
+print \'<caption>\'.$subject_name.\'</caption>\';
+print \'<tr>
+	<th>Number of Students Attended</th>
     <th>Number of Students Passed</th>
     <th>Number of Students Failed</th>
-    <th>Absent</th>
+	<th>Absent</th>
     <th>Pass Percentage</th>
-  </tr>
-  <tr>
-    <td><?php print $attended_sem; ?></td>
-    <td><?php print $passed; ?></td>
-    <td><?php print $failed; ?></td>
-    <td><?php print $attempt; ?> </td>
-    <td><?php print round($passed/$attended*100, 2); ?>%</td>
-  </tr>
-</table>';
+  </tr>\';
+print \'<tr>\';
+print \'<td>\'. $attended.\'</td>\';
+print \'<td>\'. $passed.\'</td>\';
+print \'<td>\'. $failed.\'</td>\';
+print \'<td>\'. $attempt.\'</td>\';
+print \'<td>\'. round($passed/$attended*100, 2).\'%</td>\';
+print \'</tr>\';
+print \'</table>\';
+}
+?>';
   /* No results behavior: Global: Text area */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -601,7 +615,6 @@ $attended_sem =  count($results)/count($pieces);
   $handler->display->display_options['fields']['field_student_name']['table'] = 'field_data_field_student_name';
   $handler->display->display_options['fields']['field_student_name']['field'] = 'field_student_name';
   $handler->display->display_options['fields']['field_student_name']['relationship'] = 'field_mark_student_nid';
-  $handler->display->display_options['fields']['field_student_name']['exclude'] = TRUE;
   /* Field: Content: Select Section */
   $handler->display->display_options['fields']['field_section']['id'] = 'field_section';
   $handler->display->display_options['fields']['field_section']['table'] = 'field_data_field_section';
