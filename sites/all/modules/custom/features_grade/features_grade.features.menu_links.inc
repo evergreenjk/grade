@@ -18,6 +18,9 @@ function features_grade_menu_default_menu_links() {
     'link_title' => 'Home',
     'options' => array(
       'identifier' => 'main-menu_home:<front>',
+      'attributes' => array(
+        'title' => '',
+      ),
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -31,7 +34,7 @@ function features_grade_menu_default_menu_links() {
   $menu_links['main-menu_mark-entry:admin/subject/list'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'admin/subject/list',
-    'router_path' => 'admin/subject/list',
+    'router_path' => 'admin',
     'link_title' => 'Mark Entry',
     'options' => array(
       'attributes' => array(
@@ -45,43 +48,6 @@ function features_grade_menu_default_menu_links() {
     'has_children' => 0,
     'expanded' => 0,
     'weight' => -49,
-    'customized' => 1,
-  );
-  // Exported menu link: main-menu_semester-list:admin/semester/list
-  $menu_links['main-menu_semester-list:admin/semester/list'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'admin/semester/list',
-    'router_path' => 'admin/semester/list',
-    'link_title' => 'Semester List',
-    'options' => array(
-      'identifier' => 'main-menu_semester-list:admin/semester/list',
-    ),
-    'module' => 'system',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -47,
-    'customized' => 1,
-  );
-  // Exported menu link: main-menu_subject-list:admin/subject/list
-  $menu_links['main-menu_subject-list:admin/subject/list'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'admin/subject/list',
-    'router_path' => 'admin/subject/list',
-    'link_title' => 'Subject List',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-      'identifier' => 'main-menu_subject-list:admin/subject/list',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -48,
     'customized' => 1,
   );
   // Exported menu link: user-menu_user-account:user
@@ -107,8 +73,6 @@ function features_grade_menu_default_menu_links() {
   // Included for use with string extractors like potx.
   t('Home');
   t('Mark Entry');
-  t('Semester List');
-  t('Subject List');
   t('User account');
 
   return $menu_links;

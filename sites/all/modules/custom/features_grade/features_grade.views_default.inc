@@ -39,8 +39,9 @@ function features_grade_views_default_views() {
     'field_subject_code' => 'field_subject_code',
     'title' => 'title',
     'field_branch' => 'field_branch',
+    'field_sub_section_staff' => 'field_sub_section_staff',
   );
-  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['default'] = 'title';
   $handler->display->display_options['style_options']['info'] = array(
     'views_bulk_operations' => array(
       'align' => 'views-align-center',
@@ -48,23 +49,28 @@ function features_grade_views_default_views() {
       'empty_column' => 0,
     ),
     'field_subject_code' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => 'views-align-center',
       'separator' => '',
       'empty_column' => 0,
     ),
     'title' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_branch' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_sub_section_staff' => array(
+      'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
@@ -86,7 +92,7 @@ function features_grade_views_default_views() {
       'override_label' => 1,
       'label' => 'Enter marks',
       'settings' => array(
-        'url' => 'mark-entry/',
+        'url' => 'admin/mark-entry/',
       ),
     ),
     'action::ers_bulk_upload_action' => array(
@@ -103,6 +109,7 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['field_subject_code']['id'] = 'field_subject_code';
   $handler->display->display_options['fields']['field_subject_code']['table'] = 'field_data_field_subject_code';
   $handler->display->display_options['fields']['field_subject_code']['field'] = 'field_subject_code';
+  $handler->display->display_options['fields']['field_subject_code']['exclude'] = TRUE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -110,6 +117,7 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Subject Code - Subject Name';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Select Branch */
   $handler->display->display_options['fields']['field_branch']['id'] = 'field_branch';
   $handler->display->display_options['fields']['field_branch']['table'] = 'field_data_field_branch';
@@ -124,16 +132,12 @@ function features_grade_views_default_views() {
   $handler->display->display_options['fields']['field_sub_section_staff']['id'] = 'field_sub_section_staff';
   $handler->display->display_options['fields']['field_sub_section_staff']['table'] = 'field_data_field_sub_section_staff';
   $handler->display->display_options['fields']['field_sub_section_staff']['field'] = 'field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['label'] = 'Section';
   $handler->display->display_options['fields']['field_sub_section_staff']['type'] = 'field_collection_fields';
   $handler->display->display_options['fields']['field_sub_section_staff']['settings'] = array(
     'view_mode' => 'full',
   );
   $handler->display->display_options['fields']['field_sub_section_staff']['delta_offset'] = '0';
-  /* Field: Global: Custom text */
-  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '[field_sub_section_staff] ';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -158,40 +162,6 @@ function features_grade_views_default_views() {
     'subject' => 'subject',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filter criterion: Content: Subject Code (field_subject_code) */
-  $handler->display->display_options['filters']['field_subject_code_value']['id'] = 'field_subject_code_value';
-  $handler->display->display_options['filters']['field_subject_code_value']['table'] = 'field_data_field_subject_code';
-  $handler->display->display_options['filters']['field_subject_code_value']['field'] = 'field_subject_code_value';
-  $handler->display->display_options['filters']['field_subject_code_value']['operator'] = 'contains';
-  $handler->display->display_options['filters']['field_subject_code_value']['group'] = 2;
-  $handler->display->display_options['filters']['field_subject_code_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_subject_code_value']['expose']['operator_id'] = 'field_subject_code_value_op';
-  $handler->display->display_options['filters']['field_subject_code_value']['expose']['label'] = 'Subject Code';
-  $handler->display->display_options['filters']['field_subject_code_value']['expose']['operator'] = 'field_subject_code_value_op';
-  $handler->display->display_options['filters']['field_subject_code_value']['expose']['identifier'] = 'field_subject_code_value';
-  $handler->display->display_options['filters']['field_subject_code_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-  );
-  /* Filter criterion: Content: Subject Name (field_subject_name) */
-  $handler->display->display_options['filters']['field_subject_name_value']['id'] = 'field_subject_name_value';
-  $handler->display->display_options['filters']['field_subject_name_value']['table'] = 'field_data_field_subject_name';
-  $handler->display->display_options['filters']['field_subject_name_value']['field'] = 'field_subject_name_value';
-  $handler->display->display_options['filters']['field_subject_name_value']['operator'] = 'contains';
-  $handler->display->display_options['filters']['field_subject_name_value']['group'] = 2;
-  $handler->display->display_options['filters']['field_subject_name_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_subject_name_value']['expose']['operator_id'] = 'field_subject_name_value_op';
-  $handler->display->display_options['filters']['field_subject_name_value']['expose']['label'] = 'Subject Name';
-  $handler->display->display_options['filters']['field_subject_name_value']['expose']['operator'] = 'field_subject_name_value_op';
-  $handler->display->display_options['filters']['field_subject_name_value']['expose']['identifier'] = 'field_subject_name_value';
-  $handler->display->display_options['filters']['field_subject_name_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-  );
   /* Filter criterion: Content: Select Branch (field_branch) */
   $handler->display->display_options['filters']['field_branch_tid']['id'] = 'field_branch_tid';
   $handler->display->display_options['filters']['field_branch_tid']['table'] = 'field_data_field_branch';
@@ -215,6 +185,7 @@ function features_grade_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['enabled'] = FALSE;
   $handler->display->display_options['path'] = 'admin/subject/list';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Subject List';
@@ -1035,6 +1006,208 @@ print l(\'Semester Report\', $sem_url);
   $export['student_list'] = $view;
 
   $view = new view();
+  $view->name = 'subject_list_all';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Subject List All';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Subject List';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
+    'field_subject_code' => 'field_subject_code',
+    'title' => 'title',
+    'field_branch' => 'field_branch',
+    'field_sub_section_staff' => 'field_sub_section_staff',
+  );
+  $handler->display->display_options['style_options']['default'] = 'title';
+  $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_subject_code' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_branch' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_sub_section_staff' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Field: Content: Subject Code */
+  $handler->display->display_options['fields']['field_subject_code']['id'] = 'field_subject_code';
+  $handler->display->display_options['fields']['field_subject_code']['table'] = 'field_data_field_subject_code';
+  $handler->display->display_options['fields']['field_subject_code']['field'] = 'field_subject_code';
+  $handler->display->display_options['fields']['field_subject_code']['exclude'] = TRUE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Subject Code - Subject Name';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Select Branch */
+  $handler->display->display_options['fields']['field_branch']['id'] = 'field_branch';
+  $handler->display->display_options['fields']['field_branch']['table'] = 'field_data_field_branch';
+  $handler->display->display_options['fields']['field_branch']['field'] = 'field_branch';
+  $handler->display->display_options['fields']['field_branch']['label'] = 'Degree';
+  $handler->display->display_options['fields']['field_branch']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_branch']['type'] = 'cshs_term_reference_hierarchical_text';
+  $handler->display->display_options['fields']['field_branch']['settings'] = array(
+    'separator' => ' » ',
+  );
+  /* Field: Content: Select Section/Staff */
+  $handler->display->display_options['fields']['field_sub_section_staff']['id'] = 'field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['table'] = 'field_data_field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['field'] = 'field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['label'] = 'Section';
+  $handler->display->display_options['fields']['field_sub_section_staff']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_sub_section_staff']['settings'] = array(
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'add' => 'Add',
+    'description' => 1,
+    'view_mode' => 'full',
+  );
+  $handler->display->display_options['fields']['field_sub_section_staff']['delta_offset'] = '0';
+  /* Field: Global: PHP */
+  $handler->display->display_options['fields']['php']['id'] = 'php';
+  $handler->display->display_options['fields']['php']['table'] = 'views';
+  $handler->display->display_options['fields']['php']['field'] = 'php';
+  $handler->display->display_options['fields']['php']['label'] = 'Select Section';
+  $handler->display->display_options['fields']['php']['use_php_setup'] = 0;
+  $handler->display->display_options['fields']['php']['php_value'] = 'return $data->nid;';
+  $handler->display->display_options['fields']['php']['php_output'] = '<?php
+$sections_count = count($data->field_field_sub_section_staff);
+if($sections_count == 2){
+print \'<table>\';
+print \'<caption>\'.t(\'Enter marks\').\'</caption>\';
+print \'<tr>
+	<th>A</th>
+	<th>B</th>
+  </tr>\';
+print \'<tr>\';
+print \'<td>\' . l(\'Enter Marks for A Section\', \'admin/mark-entry/\'.$data->nid.\'/3\').\'</td>\';
+print \'<td>\' . l(\'Enter Marks for B Section\', \'admin/mark-entry/\'.$data->nid.\'/4\').\'</td>\';
+print \'</tr></table>\';
+}else{
+print \'<table>\';
+print \'<caption>\'.t(\'Enter marks\').\'</caption>\';
+print \'<tr>
+	<th>A</th>
+  </tr>\';
+print \'<tr>\';
+print \'<td>\' . l(\'Enter Marks for A Section\', \'admin/mark-entry/\'.$data->nid.\'/3\').\'</td>\';
+print \'</tr></table>\';
+}
+
+?>';
+  $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
+  $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
+  /* Field: Global: PHP */
+  $handler->display->display_options['fields']['php_1']['id'] = 'php_1';
+  $handler->display->display_options['fields']['php_1']['table'] = 'views';
+  $handler->display->display_options['fields']['php_1']['field'] = 'php';
+  $handler->display->display_options['fields']['php_1']['label'] = 'View Semester Wise Report';
+  $handler->display->display_options['fields']['php_1']['use_php_setup'] = 0;
+  $handler->display->display_options['fields']['php_1']['php_value'] = 'return $data->nid;';
+  $handler->display->display_options['fields']['php_1']['php_output'] = '<?php
+print l(\'Click here! to View Subject Wise Report\',\'admin/reports/marks/\'.$data->nid);
+?>';
+  $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
+  $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'subject' => 'subject',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Select Branch (field_branch) */
+  $handler->display->display_options['filters']['field_branch_tid']['id'] = 'field_branch_tid';
+  $handler->display->display_options['filters']['field_branch_tid']['table'] = 'field_data_field_branch';
+  $handler->display->display_options['filters']['field_branch_tid']['field'] = 'field_branch_tid';
+  $handler->display->display_options['filters']['field_branch_tid']['value'] = array(
+    0 => '_none',
+  );
+  $handler->display->display_options['filters']['field_branch_tid']['group'] = 2;
+  $handler->display->display_options['filters']['field_branch_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['operator_id'] = 'field_branch_tid_op';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['operator'] = 'field_branch_tid_op';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['identifier'] = 'field_branch_tid';
+  $handler->display->display_options['filters']['field_branch_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  $handler->display->display_options['filters']['field_branch_tid']['vocabulary'] = 'branch';
+  $handler->display->display_options['filters']['field_branch_tid']['level_labels'] = 'Select Degree,Select Branch,Select Semester,Select Section';
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'admin/subject/list';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'Subject List';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'main-menu';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+  $export['subject_list_all'] = $view;
+
+  $view = new view();
   $view->name = 'subject_reference_view';
   $view->description = '';
   $view->tag = 'default';
@@ -1294,6 +1467,22 @@ print l(\'Semester Report\', $sem_url);
   $handler->display->display_options['arguments']['field_mark_subject_nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['break_phrase'] = TRUE;
+  /* Contextual filter: Content: Select Section (field_section) */
+  $handler->display->display_options['arguments']['field_section_tid']['id'] = 'field_section_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['table'] = 'field_data_field_section';
+  $handler->display->display_options['arguments']['field_section_tid']['field'] = 'field_section_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['arguments']['field_section_tid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_section_tid']['default_argument_type'] = 'taxonomy_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['default_argument_options']['term_page'] = FALSE;
+  $handler->display->display_options['arguments']['field_section_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_section_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_section_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_section_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_section_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_section_tid']['validate_options']['vocabularies'] = array(
+    'section' => 'section',
+  );
   $handler->display->display_options['filter_groups']['groups'] = array(
     1 => 'AND',
     2 => 'OR',
@@ -1305,30 +1494,10 @@ print l(\'Semester Report\', $sem_url);
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Select Section (field_section) */
-  $handler->display->display_options['filters']['field_section_tid']['id'] = 'field_section_tid';
-  $handler->display->display_options['filters']['field_section_tid']['table'] = 'field_data_field_section';
-  $handler->display->display_options['filters']['field_section_tid']['field'] = 'field_section_tid';
-  $handler->display->display_options['filters']['field_section_tid']['relationship'] = 'field_mark_student_nid';
-  $handler->display->display_options['filters']['field_section_tid']['value'] = array(
-    0 => '_none',
-  );
-  $handler->display->display_options['filters']['field_section_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_section_tid']['expose']['operator_id'] = 'field_section_tid_op';
-  $handler->display->display_options['filters']['field_section_tid']['expose']['label'] = 'Select Section';
-  $handler->display->display_options['filters']['field_section_tid']['expose']['operator'] = 'field_section_tid_op';
-  $handler->display->display_options['filters']['field_section_tid']['expose']['identifier'] = 'field_section_tid';
-  $handler->display->display_options['filters']['field_section_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-  );
-  $handler->display->display_options['filters']['field_section_tid']['vocabulary'] = 'section';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'mark-entry/%';
+  $handler->display->display_options['path'] = 'admin/mark-entry/%';
   $export['tt'] = $view;
 
   return $export;
