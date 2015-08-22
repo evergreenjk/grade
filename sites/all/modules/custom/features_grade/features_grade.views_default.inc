@@ -373,6 +373,18 @@ $attended =  $passed+$failed;
   $handler->display->display_options['arguments']['field_mark_subject_nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['break_phrase'] = TRUE;
+  /* Contextual filter: Content: Select Section (field_section) */
+  $handler->display->display_options['arguments']['field_section_tid']['id'] = 'field_section_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['table'] = 'field_data_field_section';
+  $handler->display->display_options['arguments']['field_section_tid']['field'] = 'field_section_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['arguments']['field_section_tid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_section_tid']['default_argument_type'] = 'taxonomy_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['default_argument_options']['term_page'] = FALSE;
+  $handler->display->display_options['arguments']['field_section_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_section_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_section_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_section_tid']['specify_validation'] = TRUE;
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -383,7 +395,7 @@ $attended =  $passed+$failed;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/reports/marks/%';
+  $handler->display->display_options['path'] = 'admin/reports/marks/%/%';
   $export['reports'] = $view;
 
   $view = new view();
@@ -679,7 +691,7 @@ print \'</table>\';
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Subject List';
+  $handler->display->display_options['title'] = 'Semester Wise Report';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -767,9 +779,9 @@ print l(\'Semester Report\', $sem_url);
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/semester/list';
+  $handler->display->display_options['path'] = 'admin/reports/semester';
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'Semester List';
+  $handler->display->display_options['menu']['title'] = 'Semester Wise Report';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'main-menu';
   $handler->display->display_options['menu']['context'] = 0;
@@ -1010,14 +1022,14 @@ print l(\'Semester Report\', $sem_url);
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Subject List All';
+  $view->human_name = 'Subject List Enter Marks';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Subject List';
+  $handler->display->display_options['title'] = 'Enter Marks';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -1109,14 +1121,13 @@ print l(\'Semester Report\', $sem_url);
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
-  $handler->display->display_options['fields']['php']['label'] = 'Select Section';
+  $handler->display->display_options['fields']['php']['label'] = 'Section';
   $handler->display->display_options['fields']['php']['use_php_setup'] = 0;
   $handler->display->display_options['fields']['php']['php_value'] = 'return $data->nid;';
   $handler->display->display_options['fields']['php']['php_output'] = '<?php
 $sections_count = count($data->field_field_sub_section_staff);
 if($sections_count == 2){
 print \'<table>\';
-print \'<caption>\'.t(\'Enter marks\').\'</caption>\';
 print \'<tr>
 	<th>A</th>
 	<th>B</th>
@@ -1127,7 +1138,6 @@ print \'<td>\' . l(\'Enter Marks for B Section\', \'admin/mark-entry/\'.$data->n
 print \'</tr></table>\';
 }else{
 print \'<table>\';
-print \'<caption>\'.t(\'Enter marks\').\'</caption>\';
 print \'<tr>
 	<th>A</th>
   </tr>\';
@@ -1144,6 +1154,7 @@ print \'</tr></table>\';
   $handler->display->display_options['fields']['php_1']['table'] = 'views';
   $handler->display->display_options['fields']['php_1']['field'] = 'php';
   $handler->display->display_options['fields']['php_1']['label'] = 'View Semester Wise Report';
+  $handler->display->display_options['fields']['php_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['php_1']['use_php_setup'] = 0;
   $handler->display->display_options['fields']['php_1']['php_value'] = 'return $data->nid;';
   $handler->display->display_options['fields']['php_1']['php_output'] = '<?php
@@ -1196,8 +1207,8 @@ print l(\'Click here! to View Subject Wise Report\',\'admin/reports/marks/\'.$da
   $handler->display->display_options['filters']['field_branch_tid']['vocabulary'] = 'branch';
   $handler->display->display_options['filters']['field_branch_tid']['level_labels'] = 'Select Degree,Select Branch,Select Semester,Select Section';
 
-  /* Display: Page */
-  $handler = $view->new_display('page', 'Page', 'page');
+  /* Display: Enter Marks */
+  $handler = $view->new_display('page', 'Enter Marks', 'page');
   $handler->display->display_options['path'] = 'admin/subject/list';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Subject List';
