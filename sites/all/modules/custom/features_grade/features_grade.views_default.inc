@@ -478,6 +478,24 @@ print \'</table>\';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['break_phrase'] = TRUE;
+  /* Contextual filter: Content: Select Branch (field_branch) */
+  $handler->display->display_options['arguments']['field_branch_tid']['id'] = 'field_branch_tid';
+  $handler->display->display_options['arguments']['field_branch_tid']['table'] = 'field_data_field_branch';
+  $handler->display->display_options['arguments']['field_branch_tid']['field'] = 'field_branch_tid';
+  $handler->display->display_options['arguments']['field_branch_tid']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['arguments']['field_branch_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_branch_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_branch_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_branch_tid']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Select Section (field_section) */
+  $handler->display->display_options['arguments']['field_section_tid']['id'] = 'field_section_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['table'] = 'field_data_field_section';
+  $handler->display->display_options['arguments']['field_section_tid']['field'] = 'field_section_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['arguments']['field_section_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_section_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_section_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_section_tid']['summary_options']['items_per_page'] = '25';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -922,7 +940,6 @@ print \'</table>\';
   $handler->display->display_options['fields']['field_section']['field'] = 'field_section';
   $handler->display->display_options['fields']['field_section']['relationship'] = 'field_mark_student_nid';
   $handler->display->display_options['fields']['field_section']['label'] = 'Section';
-  $handler->display->display_options['fields']['field_section']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_section']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Content: Subject Name */
   $handler->display->display_options['fields']['field_subject_name']['id'] = 'field_subject_name';
@@ -984,6 +1001,24 @@ print \'</table>\';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['field_mark_subject_nid']['break_phrase'] = TRUE;
+  /* Contextual filter: Content: Select Branch (field_branch) */
+  $handler->display->display_options['arguments']['field_branch_tid']['id'] = 'field_branch_tid';
+  $handler->display->display_options['arguments']['field_branch_tid']['table'] = 'field_data_field_branch';
+  $handler->display->display_options['arguments']['field_branch_tid']['field'] = 'field_branch_tid';
+  $handler->display->display_options['arguments']['field_branch_tid']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['arguments']['field_branch_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_branch_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_branch_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_branch_tid']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Select Section (field_section) */
+  $handler->display->display_options['arguments']['field_section_tid']['id'] = 'field_section_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['table'] = 'field_data_field_section';
+  $handler->display->display_options['arguments']['field_section_tid']['field'] = 'field_section_tid';
+  $handler->display->display_options['arguments']['field_section_tid']['relationship'] = 'field_mark_student_nid';
+  $handler->display->display_options['arguments']['field_section_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_section_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_section_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_section_tid']['summary_options']['items_per_page'] = '25';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -1030,19 +1065,69 @@ print \'</table>\';
 $subject_nids = \'\';
 $prefix = \'\';
 foreach($results as $result){
+$branch_tid = !empty($result->field_field_branch[0]) ? $result->field_field_branch[0][\'raw\'][\'tid\']: \'\';
+	$count_section = count($result->field_field_sub_section_staff);
+
 $subject_nids .= $prefix.$result->nid;
 $prefix = \',\';
 }
-$sem_url =  l(\'Semester Report\',\'admin/reports/sem/\'.$subject_nids);
-$overall_url =  l(\'Overall Report\',  \'admin/reports/overall/\'.$subject_nids);
+$sem_url = \'admin/reports/sem/\'.$subject_nids.\'/\'.$branch_tid;
+$overall_url =  \'admin/reports/overall/\'.$subject_nids.\'/\'.$branch_tid;
+
+$sem_link =  l(\'Semester Report\',$sem_url);
+$overall_link =  l(\'Overall Report\',  $overall_url);
 print \'<table style="width:100%">\';
 print \'<tr>
 	<th>Semester Wise Report</th>
 	<th>Overall Report</th>
   </tr>\';
 print \'<tr>\';
-print \'<td>\'. $sem_url.\'</td>\';
-print \'<td>\'. $overall_url.\'</td>\';
+print \'<td>\';
+if($count_section == 2){
+	print \'<table>\';
+	print \'<tr>
+	<th>A</th>
+	<th>B</th>
+  </tr>\';
+	print \'<tr>\';
+	print \'<td>\' . l(\'A - Section\', $sem_url.\'/3\').\'</td>\';
+	print \'<td>\' . l(\'B - Section\', $sem_url.\'/4\').\'</td>\';
+	print \'</tr></table>\';
+}
+else{
+		print \'<table>\';
+	print \'<tr>
+	<th>A</th>
+  </tr>\';
+	print \'<tr>\';
+	print \'<td>\' . l(\'A - Section\', $sem_url.\'/3\').\'</td>\';
+	print \'</tr></table>\';
+	
+}
+print \'</td>\';
+print \'<td>\';
+if($count_section == 2){
+	print \'<table>\';
+	print \'<tr>
+	<th>A</th>
+	<th>B</th>
+  </tr>\';
+	print \'<tr>\';
+	print \'<td>\' . l(\'A - Section\', $overall_url.\'/3\').\'</td>\';
+	print \'<td>\' . l(\'B - Section\', $overall_url.\'/4\').\'</td>\';
+	print \'</tr></table>\';
+}
+else{
+	print \'<table>\';
+	print \'<tr>
+	<th>A</th>
+  </tr>\';
+	print \'<tr>\';
+	print \'<td>\' . l(\'A - Section\', $overall_url.\'/3\').\'</td>\';
+	print \'</tr></table>\';
+
+}
+print \'</td>\';
 print \'</tr>\';
 print \'</table>\';
 ?>';
@@ -1060,6 +1145,22 @@ print \'</table>\';
   $handler->display->display_options['fields']['nothing']['label'] = '';
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '&nbsp;';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Field: Content: Select Section/Staff */
+  $handler->display->display_options['fields']['field_sub_section_staff']['id'] = 'field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['table'] = 'field_data_field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['field'] = 'field_sub_section_staff';
+  $handler->display->display_options['fields']['field_sub_section_staff']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_sub_section_staff']['type'] = 'field_collection_fields';
+  $handler->display->display_options['fields']['field_sub_section_staff']['settings'] = array(
+    'view_mode' => 'full',
+  );
+  $handler->display->display_options['fields']['field_sub_section_staff']['delta_offset'] = '0';
+  /* Field: Content: Select Branch */
+  $handler->display->display_options['fields']['field_branch']['id'] = 'field_branch';
+  $handler->display->display_options['fields']['field_branch']['table'] = 'field_data_field_branch';
+  $handler->display->display_options['fields']['field_branch']['field'] = 'field_branch';
+  $handler->display->display_options['fields']['field_branch']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_branch']['type'] = 'taxonomy_term_reference_plain';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -1362,6 +1463,7 @@ print \'</table>\';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
